@@ -43,5 +43,4 @@ VOLUME ["/opt/tomcat/conf","/opt/tomcat/logs","/opt/tomcat/configuration","/opt/
 
 WORKDIR /opt/tomcat
 
-USER tomcat
 CMD ["/opt/tomcat/bin/startup.sh"]
