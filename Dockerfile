@@ -2,8 +2,6 @@ FROM ubuntu
 
 MAINTAINER Sandor Zelei
 
-ENV TOMCAT_VERSION 8.0.28
-
 # Install JDK 8
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list
 RUN echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list
@@ -26,9 +24,8 @@ RUN rm -rf /opt/tomcat/webapps/examples
 RUN rm -rf /opt/tomcat/webapps/docs
 RUN rm -rf /opt/tomcat/webapps/ROOT
 
-# Add admin/admin user
-ADD tomcat-users.xml /opt/tomcat/conf/
-ADD tomcatd.conf /etc/supervisor/conf.d/
+# Add keystore
+ADD .keystore /root
 
 RUN wget --quiet --no-cookies http://central.maven.org/maven2/com/mchange/c3p0/0.9.5.2/c3p0-0.9.5.2.jar -P /opt/tomcat/lib
 RUN wget --quiet --no-cookies http://central.maven.org/maven2/com/mchange/mchange-commons-java/0.2.11/mchange-commons-java-0.2.11.jar -P /opt/tomcat/lib
@@ -38,9 +35,13 @@ RUN wget --quiet --no-cookies http://central.maven.org/maven2/mysql/mysql-connec
 ENV CATALINA_HOME /opt/tomcat
 ENV PATH $PATH:$CATALINA_HOME/bin
 
+EXPOSE 80
 EXPOSE 8080
 EXPOSE 8009
 
-VOLUME ["/opt/tomcat/conf","/opt/tomcat/logs"]
+VOLUME ["/opt/tomcat/conf","/opt/tomcat/logs","/opt/tomcat/configuration","/opt/tomcat/media"]
 
 WORKDIR /opt/tomcat
+
+USER tomcat
+CMD ["/opt/tomcat/bin/catalina.sh run"]
