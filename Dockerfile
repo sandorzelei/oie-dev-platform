@@ -14,11 +14,11 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 && apt-get
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 # Get Tomcat
-RUN wget --quiet --no-cookies http://apache.rediris.es/tomcat/tomcat-8/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz -O /tmp/tomcat.tgz
+RUN wget --quiet --no-cookies http://xenia.sote.hu/ftp/mirrors/www.apache.org/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.tar.gz -O /tmp/tomcat.tgz
 
 # Uncompress
 RUN tar xzvf /tmp/tomcat.tgz -C /opt
-RUN mv /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat
+RUN mv /opt/apache-tomcat-8.0.33 /opt/tomcat
 RUN rm /tmp/tomcat.tgz
 
 # Remove garbage
