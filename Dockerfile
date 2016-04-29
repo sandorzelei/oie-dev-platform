@@ -24,12 +24,14 @@ RUN rm -rf /opt/tomcat/webapps/examples
 RUN rm -rf /opt/tomcat/webapps/docs
 RUN rm -rf /opt/tomcat/webapps/ROOT
 
+ADD setenv.sh /opt/tomcat/bin
+
 # Add keystore
 ADD .keystore /root
 
 RUN wget --quiet --no-cookies http://central.maven.org/maven2/com/mchange/c3p0/0.9.5.2/c3p0-0.9.5.2.jar -P /opt/tomcat/lib
 RUN wget --quiet --no-cookies http://central.maven.org/maven2/com/mchange/mchange-commons-java/0.2.11/mchange-commons-java-0.2.11.jar -P /opt/tomcat/lib
-RUN wget --quiet --no-cookies http://central.maven.org/maven2/mysql/mysql-connector-java/6.0.2/mysql-connector-java-6.0.2.jar -P /opt/tomcat/lib
+RUN wget --quiet --no-cookies http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar -P /opt/tomcat/lib
 
 
 ENV CATALINA_HOME /opt/tomcat
@@ -39,8 +41,6 @@ EXPOSE 80
 EXPOSE 8080
 EXPOSE 8009
 
-VOLUME ["/opt/tomcat/conf","/opt/tomcat/logs","/opt/tomcat/configuration","/opt/tomcat/media"]
+VOLUME ["/opt/tomcat/conf","/opt/tomcat/logs","/opt/tomcat/configuration","/opt/tomcat/media","/opt/tomcat/app"]
 
 WORKDIR /opt/tomcat
-
-CMD ["/opt/tomcat/bin/startup.sh"]
